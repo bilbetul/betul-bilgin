@@ -3,14 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Yasir Bilgin</title>
-
-<script src="https://yasirbilgin.com/nav.js"></script> 
-<link rel="icon" type="image/x-icon"   href="/favicon/favicon.ico">
-<link rel="icon" type="image/svg+xml"  href="/favicon/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180"    href="/favicon/apple-touch-icon.png">
-<link rel="manifest" href="/favicon/site.webmanifest">
+<title>Betul Bilgin — Knowledge Hub</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,15 +13,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #f5f3ee;
+  --bg: #f4f5f8;
   --surface: #ffffff;
-  --border: rgba(0,0,0,0.10);
-  --border-strong: rgba(0,0,0,0.20);
-  --text: #1a1a18;
-  --text-muted: #7a7872;
-  --text-faint: #b0ada5;
-  --accent: #2d4a3e;
-  --accent-light: #e8f0ec;
+  --border: rgba(0,0,0,0.09);
+  --border-strong: rgba(0,0,0,0.18);
+  --text: #1a1a1e;
+  --text-muted: #72737f;
+  --text-faint: #aaaab5;
+  --accent: #001E62;
+  --accent-mid: #003399;
+  --accent-light: #eaecf5;
   --radius-md: 10px;
   --radius-lg: 16px;
   --fs-12: 0.75rem;
@@ -39,15 +33,16 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #131310;
-    --surface: #1e1e1a;
-    --border: rgba(255,255,255,0.10);
-    --border-strong: rgba(255,255,255,0.22);
-    --text: #f0ede5;
-    --text-muted: #908d85;
-    --text-faint: #7a766e;
-    --accent: #7fbf9e;
-    --accent-light: rgba(127,191,158,0.10);
+    --bg: #111218;
+    --surface: #1c1d27;
+    --border: rgba(255,255,255,0.09);
+    --border-strong: rgba(255,255,255,0.20);
+    --text: #edeef5;
+    --text-muted: #8c8da0;
+    --text-faint: #6a6b7e;
+    --accent: #7b9fd4;
+    --accent-mid: #5580c0;
+    --accent-light: rgba(123,159,212,0.12);
   }
 }
 
@@ -59,10 +54,67 @@ body {
   font-family: 'DM Sans', sans-serif;
   font-weight: 400;
   min-height: 100vh;
-  padding-top: 62px;
 }
 
-/* HERO */
+/* ── TOP BAR ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 54px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+
+.topbar-brand {
+  font-size: var(--fs-14);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-brand-logo {
+  width: 28px;
+  height: 28px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.topbar-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.topbar-links a {
+  font-size: var(--fs-13, 0.8125rem);
+  color: rgba(255,255,255,0.80);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.topbar-links a:hover { color: #fff; }
+
+@media (max-width: 640px) {
+  .topbar-links { display: none; }
+  .topbar { padding: 0 1.2rem; }
+}
+
+/* ── HERO ── */
 .hero {
   display: flex;
   flex-direction: column;
@@ -77,19 +129,41 @@ body {
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-mid);
   margin-bottom: 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hero-eyebrow { color: var(--accent); }
 }
 
 .hero-sub {
   font-size: var(--fs-15);
   font-weight: 300;
   color: var(--text-muted);
-  max-width: 700px;
-  line-height: 1.6;
+  max-width: 680px;
+  line-height: 1.65;
 }
 
-/* SEARCH */
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1.25rem;
+}
+
+.hero-tag {
+  font-size: var(--fs-12);
+  font-weight: 500;
+  padding: 0.3rem 0.85rem;
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: 30px;
+  border: 1px solid var(--border-strong);
+}
+
+/* ── SEARCH ── */
 .search-wrap {
   width: 100%;
   max-width: 1200px;
@@ -128,7 +202,7 @@ body {
 
 .search-input::placeholder { color: var(--text-faint); }
 .search-input:focus { border-color: var(--accent); }
-.search-input:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent); }
+.search-input:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
 
 .search-btn {
   height: 44px;
@@ -146,9 +220,10 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+  text-decoration: none;
 }
 
-.search-btn:hover { opacity: 0.88; }
+.search-btn:hover { opacity: 0.85; }
 
 .search-btn svg {
   width: 15px;
@@ -161,61 +236,13 @@ body {
   flex-shrink: 0;
 }
 
-/* SEARCH DROPDOWN */
-.search-results {
-  margin-top: 0.75rem;
-  border-top: 1px solid var(--border);
-  padding-top: 0.75rem;
-  max-height: 340px;
-  overflow-y: auto;
-  flex-direction: column;
-  gap: 2px;
-  display: none;
-}
-
-.search-results.visible {
-  display: flex;
-}
-
-.search-result-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 0.55rem 0.75rem;
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  transition: background 0.12s;
-}
-
-.search-result-item:hover {
-  background: var(--accent-light);
-}
-
-.result-title {
-  font-size: var(--fs-14);
-  font-weight: 500;
-  color: var(--text);
-}
-
-.result-title mark {
-  background: transparent;
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.result-path {
+.search-hint {
+  margin-top: 0.65rem;
   font-size: var(--fs-12);
   color: var(--text-faint);
 }
 
-.search-status {
-  font-size: var(--fs-12);
-  color: var(--text-faint);
-  padding: 0.4rem 0.75rem;
-  text-align: center;
-}
-
-/* SECTION */
+/* ── SECTION ── */
 .section-wrap {
   width: 100%;
   max-width: 1200px;
@@ -246,14 +273,14 @@ body {
   background: var(--border);
 }
 
-/* GRID */
+/* ── GRID ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
 }
 
-/* CARD */
+/* ── CARD ── */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -266,6 +293,7 @@ body {
   transition: border-color 0.15s, transform 0.12s;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .card::before {
@@ -307,7 +335,52 @@ body {
   text-overflow: ellipsis;
 }
 
-/* REFERENCES */
+/* ── AWARD BANNER ── */
+.award-strip {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem 2rem;
+  animation: fadeUp 0.5s 0.08s ease both;
+}
+
+.award-cards {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.award-card {
+  flex: 1;
+  min-width: 180px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.award-card-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.award-card-text {}
+.award-card-title {
+  font-size: var(--fs-14);
+  font-weight: 500;
+  color: var(--text);
+}
+.award-card-sub {
+  font-size: var(--fs-12);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ── REFERENCES ── */
 .ref-grid {
   display: flex;
   flex-wrap: wrap;
@@ -343,7 +416,7 @@ body {
   flex-shrink: 0;
 }
 
-/* FOOTER */
+/* ── FOOTER ── */
 .footer {
   text-align: center;
   padding: 2rem 1.5rem;
@@ -358,20 +431,20 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* ANIMATION */
+/* ── ANIMATION ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* RESPONSIVE */
+/* ── RESPONSIVE ── */
 @media (max-width: 1000px) {
   .grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 720px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
-  .search-wrap, .section-wrap { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .search-wrap, .section-wrap, .award-strip { padding-left: 1.2rem; padding-right: 1.2rem; }
 }
 
 @media (max-width: 500px) {
@@ -393,11 +466,40 @@ button:focus-visible {
 
 <body>
 
+<!-- TOP BAR -->
+<header class="topbar">
+  <a class="topbar-brand" href="#">
+    <span class="topbar-brand-logo">⚗️</span>
+    Dr. Betul Bilgin
+  </a>
+  <nav>
+    <ul class="topbar-links">
+      <li><a href="https://che.uic.edu/profiles/betul-bilgin/" target="_blank" rel="noopener">UIC Profile</a></li>
+      <li><a href="https://scholar.google.com/citations?user=vX6njtsAAAAJ&hl=en" target="_blank" rel="noopener">Publications</a></li>
+      <li><a href="mailto:bbilgin@uic.edu">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
 <main>
+
+<!-- HERO -->
 <section class="hero">
-  <p class="hero-eyebrow">Knowledge · Reflection · Community</p>
-  <h1 style="font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; margin-bottom: 0.75rem;">Yasir Bilgin — Knowledge Hub</h1>
-  <p class="hero-sub">Writings, reflections, and community resources in one place. More sections coming soon.</p>
+  <p class="hero-eyebrow">Teaching · Research · Engineering Education</p>
+  <h1 style="font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; margin-bottom: 0.75rem;">
+    Betul Bilgin — Knowledge Hub
+  </h1>
+  <p class="hero-sub">
+    Clinical Professor of Chemical Engineering at the University of Illinois Chicago.
+    Bridging classroom learning, industry practice, and the future of engineering education.
+  </p>
+  <div class="hero-tags">
+    <span class="hero-tag">🎓 UIC ChE</span>
+    <span class="hero-tag">🔬 Engineering Education Research</span>
+    <span class="hero-tag">🤖 AI in Education</span>
+    <span class="hero-tag">🏭 Senior Design</span>
+    <span class="hero-tag">🌐 Fulbright Scholar 2025–26</span>
+  </div>
 </section>
 
 <!-- SEARCH -->
@@ -408,137 +510,188 @@ button:focus-visible {
         class="search-input"
         id="searchInput"
         type="text"
-        placeholder="Search all content on yasirbilgin.com…"
+        placeholder="Search Google Scholar for Dr. Bilgin's publications…"
         autocomplete="off"
         spellcheck="false"
       />
-      <button class="search-btn" id="searchBtn">
+      <a class="search-btn" id="searchBtn" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         Search
-      </button>
+      </a>
     </div>
-    <div class="search-results" id="searchResults"></div>
+    <p class="search-hint">Opens a Google Scholar search for Betul Bilgin's work on the topic you enter.</p>
   </div>
 </div>
 
-<!-- BROWSE SECTIONS -->
-<div class="section-wrap" style="padding-top: 1.5rem;">
+<!-- AWARDS -->
+<div class="award-strip">
   <div class="section-header">
-    <span class="section-label">Browse all sections</span>
+    <span class="section-label">Awards &amp; Honors</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="award-cards" id="awardCards"></div>
+</div>
+
+<!-- BROWSE SECTIONS -->
+<div class="section-wrap" style="padding-top: 0.5rem;">
+  <div class="section-header">
+    <span class="section-label">Browse all areas</span>
     <div class="section-line"></div>
   </div>
   <div class="grid" id="cardGrid"></div>
 </div>
 
-<!-- REFERENCES & TOOLS -->
+<!-- REFERENCES & LINKS -->
 <div class="section-wrap" style="padding-bottom: 4rem;">
   <div class="section-header">
-    <span class="section-label">References &amp; Tools</span>
+    <span class="section-label">Profiles &amp; Resources</span>
     <div class="section-line"></div>
   </div>
   <div class="ref-grid" id="refGrid"></div>
 </div>
 
 <footer class="footer">
-  © Yasir Bilgin · yasirbilgin.com
+  © Betul Bilgin · Clinical Professor, Department of Chemical Engineering · University of Illinois Chicago ·
+  <a href="mailto:bbilgin@uic.edu" style="color: inherit;">bbilgin@uic.edu</a>
 </footer>
+
 </main>
 
 <script>
-const BASE = 'https://yasirbilgin.com';
+// ── AWARDS ────────────────────────────────────────────────────────────────────
+const AWARDS = [
+  { icon: '🌐', title: 'Fulbright Scholar Award', sub: '2025–2026' },
+  { icon: '⭐', title: 'AIChE 35 Under 35', sub: 'Education Category · 2017' },
+  { icon: '🏅', title: 'ASEE 20 Under 40', sub: '2018' },
+  { icon: '🏆', title: 'ASEE Ray W. Fahien Award', sub: 'Chemical Engineering Education' },
+  { icon: '🎖️', title: 'UIC Teaching Recognition Award', sub: 'College of Engineering' },
+  { icon: '📘', title: 'UIC Teaching Scholar', sub: 'Spring 2017' },
+];
 
+// ── SECTIONS ──────────────────────────────────────────────────────────────────
 const SECTIONS = [
   {
-    icon: '🕌',
-    name: 'Islamic Studies',
-    desc: 'Disciplines, Qur\'an, and scholarly tradition',
-    url: BASE + '/islamic-studies/disciplines/usul-fiqh.html',
-    display: 'yasirbilgin.com/islamic-studies'
+    icon: '🌡️',
+    name: 'Thermodynamics',
+    desc: 'Introduction to thermodynamics for chemical engineers — CHE 201.',
+    url: 'https://che.uic.edu/undergraduate-programs/courses/',
+    display: 'che.uic.edu / courses'
   },
   {
-    icon: '🤲',
-    name: 'Spirituality',
-    desc: 'Fasting, the heart, and inner preparation',
-    url: BASE + '/spirituality/preparing-the-vessel.html',
-    display: 'yasirbilgin.com/spirituality'
+    icon: '⚖️',
+    name: 'Material & Energy Balances',
+    desc: 'Foundations of mass and energy accounting in chemical processes.',
+    url: 'https://che.uic.edu/undergraduate-programs/courses/',
+    display: 'che.uic.edu / courses'
   },
   {
-    icon: '🛐',
-    name: 'Religion',
-    desc: 'Comparative religion, shared themes, and truth',
-    url: BASE + '/religion/shared-themes-of-religions.html',
-    display: 'yasirbilgin.com/religion'
+    icon: '⚗️',
+    name: 'Chemical Kinetics',
+    desc: 'Reaction rates, reactor design, and kinetics for practicing engineers.',
+    url: 'https://che.uic.edu/undergraduate-programs/courses/',
+    display: 'che.uic.edu / courses'
+  },
+  {
+    icon: '🏭',
+    name: 'Senior Design',
+    desc: 'CHE 396/397 capstone courses integrating real industry problems and mentors.',
+    url: 'https://che.uic.edu/undergraduate-programs/courses/',
+    display: 'che.uic.edu / senior design'
+  },
+  {
+    icon: '🔬',
+    name: 'Engineering Education Research',
+    desc: 'NSF-funded research on professional identity and workplace competency integration.',
+    url: 'https://peer.asee.org/generative-ai-in-chemical-engineering-education-rebuilding-thermodynamics-material-and-energy-balances-and-kinetics-courses-with-ai-and-chemical-engineering-students-perception-of-ai',
+    display: 'asee.org / peer'
+  },
+  {
+    icon: '🤖',
+    name: 'AI in Education',
+    desc: 'Rebuilding core ChE courses with generative AI and studying student perceptions.',
+    url: 'https://peer.asee.org/generative-ai-in-chemical-engineering-education-rebuilding-thermodynamics-material-and-energy-balances-and-kinetics-courses-with-ai-and-chemical-engineering-students-perception-of-ai',
+    display: 'asee.org / peer'
   },
   {
     icon: '🤝',
-    name: 'Hizmet Community',
-    desc: 'Resources and toolbox for the Hizmet movement',
-    url: BASE + '/hizmet-community/resources-and-toolbox.html',
-    display: 'yasirbilgin.com/hizmet-community'
+    name: 'Industry-Academia Bridge',
+    desc: 'Integrating industry mentors, real problems, and guest speakers into undergraduate courses.',
+    url: 'https://engineering.uic.edu/news-stories/grant-to-help-students-gain-real-world-insight/',
+    display: 'engineering.uic.edu'
   },
   {
-    icon: '✈️',
-    name: 'Travels',
-    desc: 'Journey through civilizations and cultures',
-    url: BASE + '/travels/influential-cultures.html',
-    display: 'yasirbilgin.com/travels'
+    icon: '🌍',
+    name: 'DEI in Engineering',
+    desc: 'Fostering diversity, equity, and inclusion across the UIC ChE department.',
+    url: 'https://peer.asee.org/fostering-diversity-equity-and-inclusion-in-engineering-education-a-case-study-of-uic-chemical-engineering-department',
+    display: 'asee.org / peer'
   },
   {
-    icon: '📚',
-    name: 'Essentials',
-    desc: 'Essential books, global history, and universal principles',
-    url: BASE + '/essentials/essential-books.html',
-    display: 'yasirbilgin.com/essentials'
+    icon: '📊',
+    name: 'Data Science in ChE',
+    desc: 'Embedding data science and computational thinking into the chemical engineering curriculum.',
+    url: 'https://che.uic.edu/che-research/che-research-areas/',
+    display: 'che.uic.edu / research'
   },
   {
-    icon: '🎨',
-    name: 'Arts & Crafts',
-    desc: 'Calligraphy, music, culinary arts, and design',
-    url: BASE + '/arts/the-five-arts.html',
-    display: 'yasirbilgin.com/arts'
+    icon: '🎓',
+    name: 'Student Success Programs',
+    desc: 'NSF S-STEM programs for high-achieving, low-income engineering students at UIC.',
+    url: 'https://engineering.uic.edu/news-stories/new-program-aimed-at-helping-low-income-high-achieving-students/',
+    display: 'engineering.uic.edu'
   },
   {
-    icon: '🧠',
-    name: 'MBTI',
-    desc: 'Personality, the ideal person, and Ramadan guides',
-    url: BASE + '/mbti/insan-kamil.html',
-    display: 'yasirbilgin.com/mbti'
+    icon: '🌐',
+    name: 'Fulbright Scholarship',
+    desc: 'International educational exchange and global engineering education collaboration.',
+    url: 'https://che.uic.edu/profiles/betul-bilgin/',
+    display: 'Fulbright Scholar 2025–26'
   },
   {
-    icon: '🗣️',
-    name: 'Linguistics',
-    desc: 'World languages and communication studies',
-    url: BASE + '/linguistics/world-languages.html',
-    display: 'yasirbilgin.com/linguistics'
-  },
-  {
-    icon: '🖥️',
-    name: 'DevOps / SRE',
-    desc: 'DevOps responsibilities and infrastructure notes',
-    url: BASE + '/devops/responsibilities.html',
-    display: 'yasirbilgin.com/devops'
+    icon: '📝',
+    name: 'Publications',
+    desc: 'Peer-reviewed papers on engineering education, AI, DEI, and professional identity.',
+    url: 'https://scholar.google.com/citations?user=vX6njtsAAAAJ&hl=en',
+    display: 'scholar.google.com'
   },
 ];
 
+// ── REFERENCES ────────────────────────────────────────────────────────────────
 const REFERENCES = [
-  { icon: '📰', name: 'Medium Articles',         url: 'https://medium.com/@yasirbil',           external: true },
-  { icon: '🌍', name: 'Global History',          url: BASE + '/essentials/global-history.html', external: false },
-  { icon: '💡', name: 'Universal Principles',    url: BASE + '/essentials/universal-principles.html', external: false },
-  { icon: '📚', name: 'Essential Books',         url: BASE + '/essentials/essential-books.html', external: false },
-  { icon: '🕌', name: 'Essential Books — Islam', url: BASE + '/essentials/essential-books--islam.html', external: false },
-  { icon: '🎓', name: 'Madrasa Books',           url: BASE + '/islamic-studies/madrasa-books.html', external: false },
-  { icon: '🔢', name: '500 Facts',               url: BASE + '/essentials/500-facts.html', external: false },
-  { icon: '📄', name: 'CRISD Papers',            url: 'https://mailchi.mp/939b3b8716af/ktphane', external: true },
-  { icon: '🔗', name: 'Usul.ai',                 url: 'https://usul.ai/', external: true },
-  { icon: '🔗', name: 'OpenAlex Works',          url: 'https://openalex.org/works', external: true },
+  { icon: '🏫', name: 'UIC ChE Profile',       url: 'https://che.uic.edu/profiles/betul-bilgin/',                                   external: true },
+  { icon: '📚', name: 'Google Scholar',         url: 'https://scholar.google.com/citations?user=vX6njtsAAAAJ&hl=en',                 external: true },
+  { icon: '🔗', name: 'LinkedIn',               url: 'https://www.linkedin.com/in/betul-bilgin-45137570/',                           external: true },
+  { icon: '🧪', name: 'AIChE Profile',          url: 'https://www.aiche.org/community/bio/betul-bilgin',                             external: true },
+  { icon: '📄', name: 'ResearchGate',           url: 'https://www.researchgate.net/scientific-contributions/Betul-Bilgin-2178428648', external: true },
+  { icon: '🏛️', name: 'UIC ChE Department',     url: 'https://che.uic.edu/',                                                         external: true },
+  { icon: '📰', name: 'ASEE PEER Papers',       url: 'https://peer.asee.org/search?q=betul+bilgin',                                  external: true },
+  { icon: '💡', name: 'NSF Grant Story',        url: 'https://engineering.uic.edu/news-stories/grant-to-help-students-gain-real-world-insight/', external: true },
+  { icon: '📧', name: 'bbilgin@uic.edu',        url: 'mailto:bbilgin@uic.edu',                                                       external: false },
 ];
 
-// Render section cards
+// ── RENDER AWARDS ─────────────────────────────────────────────────────────────
+const awardCards = document.getElementById('awardCards');
+AWARDS.forEach(a => {
+  const div = document.createElement('div');
+  div.className = 'award-card';
+  div.innerHTML = `
+    <span class="award-card-icon">${a.icon}</span>
+    <div class="award-card-text">
+      <div class="award-card-title">${a.title}</div>
+      <div class="award-card-sub">${a.sub}</div>
+    </div>
+  `;
+  awardCards.appendChild(div);
+});
+
+// ── RENDER CARDS ──────────────────────────────────────────────────────────────
 const grid = document.getElementById('cardGrid');
 SECTIONS.forEach(s => {
   const a = document.createElement('a');
   a.className = 'card';
   a.href = s.url;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
   a.innerHTML = `
     <div class="card-icon">${s.icon}</div>
     <div class="card-name">${s.name}</div>
@@ -548,160 +701,50 @@ SECTIONS.forEach(s => {
   grid.appendChild(a);
 });
 
-// Render reference pills
+// ── RENDER REFERENCE PILLS ────────────────────────────────────────────────────
 const refGrid = document.getElementById('refGrid');
 REFERENCES.forEach(r => {
   const a = document.createElement('a');
   a.className = 'ref-btn';
   a.href = r.url;
   if (r.external) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
-  a.innerHTML = `<span class="ref-btn-dot"></span>${r.icon} ${r.name}${r.external ? ' ↗' : ''}`;
+  a.innerHTML = `<span class="ref-btn-dot"></span>${r.icon} ${r.name}${r.external && !r.url.startsWith('mailto') ? ' ↗' : ''}`;
   refGrid.appendChild(a);
 });
 
-// ── Sitemap-powered live search ──────────────────────────────────────────────
+// ── GOOGLE SCHOLAR SEARCH ─────────────────────────────────────────────────────
+const searchInput = document.getElementById('searchInput');
+const searchBtn   = document.getElementById('searchBtn');
 
-const searchInput   = document.getElementById('searchInput');
-const searchBtn     = document.getElementById('searchBtn');
-const searchResults = document.getElementById('searchResults');
-let activeIndex = -1;
-
-let sitemapPages = []; // { title, path, url }
-let sitemapLoaded = false;
-
-// Convert a URL path into a readable title
-// e.g. "/travels/japan/spiritual-japan.html" → "Spiritual Japan"
-function pathToTitle(url) {
-  try {
-    const path = new URL(url).pathname;
-    const file = path.split('/').pop().replace('.html', '');
-    return file
-      .replace(/[-_]/g, ' ')
-      .replace(/\b\w/g, c => c.toUpperCase())
-      .trim() || path;
-  } catch {
-    return url;
-  }
+function buildScholarURL(query) {
+  const q = encodeURIComponent('Betul Bilgin ' + query.trim());
+  return `https://scholar.google.com/scholar?q=${q}`;
 }
 
-// Extract section from path, e.g. "/travels/japan/..." → "travels › japan"
-function pathToBreadcrumb(url) {
-  try {
-    const parts = new URL(url).pathname.split('/').filter(Boolean);
-    parts.pop(); // remove filename
-    return parts.join(' › ') || 'home';
-  } catch {
-    return '';
-  }
-}
-
-// Fetch and parse the sitemap once
-async function loadSitemap() {
-  if (sitemapLoaded) return;
-  searchResults.classList.add('visible');
-  searchResults.innerHTML = '<span class="search-status">Loading pages…</span>';
-  try {
-    const res  = await fetch('https://yasirbilgin.com/sitemap.xml');
-    const text = await res.text();
-    const parser = new DOMParser();
-    const xml    = parser.parseFromString(text, 'application/xml');
-    const locs   = Array.from(xml.querySelectorAll('url > loc'));
-    sitemapPages = locs.map(el => {
-      const url = el.textContent.trim();
-      return { url, title: pathToTitle(url), breadcrumb: pathToBreadcrumb(url) };
-    });
-    sitemapLoaded = true;
-  } catch (e) {
-    searchResults.innerHTML = '<span class="search-status">Could not load pages — check your connection.</span>';
-    return;
-  }
-  // Re-run search now that pages are loaded
-  runSearch(searchInput.value.trim());
-}
-
-// Highlight matching substring in text
-function highlight(text, query) {
-  if (!query) return text;
-  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark>$1</mark>');
-}
-
-function runSearch(q) {
+searchBtn.addEventListener('click', function(e) {
+  const q = searchInput.value.trim();
   if (!q) {
-    searchResults.classList.remove('visible');
-    searchResults.innerHTML = '';
+    e.preventDefault();
+    searchInput.focus();
     return;
   }
-
-  if (!sitemapLoaded) {
-    loadSitemap();
-    return;
-  }
-
-  const lower   = q.toLowerCase();
-  const matches = sitemapPages.filter(p =>
-    p.title.toLowerCase().includes(lower) ||
-    p.breadcrumb.toLowerCase().includes(lower) ||
-    p.url.toLowerCase().includes(lower)
-  ).slice(0, 12);
-
-  searchResults.classList.add('visible');
-  activeIndex = -1;
-
-  if (!matches.length) {
-    searchResults.innerHTML = '<span class="search-status">No pages found.</span>';
-    return;
-  }
-
-  searchResults.innerHTML = matches.map(p => `
-    <a class="search-result-item" href="${p.url}">
-      <span class="result-title">${highlight(p.title, q)}</span>
-      <span class="result-path">${highlight(p.breadcrumb, q)}</span>
-    </a>
-  `).join('');
-}
-
-function updateActiveResult(index) {
-  const items = Array.from(searchResults.querySelectorAll('.search-result-item'));
-  if (!items.length) return;
-  activeIndex = (index + items.length) % items.length;
-  items.forEach((el, i) => {
-    el.style.background = i === activeIndex ? 'var(--accent-light)' : '';
-  });
-}
-
-// Trigger search as user types (debounced)
-let debounceTimer;
-searchInput.addEventListener('input', function() {
-  clearTimeout(debounceTimer);
-  const q = this.value.trim();
-  if (!q) { searchResults.classList.remove('visible'); searchResults.innerHTML = ''; return; }
-  debounceTimer = setTimeout(() => runSearch(q), 180);
+  searchBtn.href = buildScholarURL(q);
 });
 
-// Also trigger on button click or Enter
-searchBtn.addEventListener('click', () => runSearch(searchInput.value.trim()));
 searchInput.addEventListener('keydown', function(e) {
-  if (e.key === 'ArrowDown') { e.preventDefault(); updateActiveResult(activeIndex + 1); }
-  if (e.key === 'ArrowUp') { e.preventDefault(); updateActiveResult(activeIndex - 1); }
-  if (e.key === 'Enter' && activeIndex >= 0) {
-    const items = searchResults.querySelectorAll('.search-result-item');
-    if (items[activeIndex]) window.location.href = items[activeIndex].href;
-    return;
-  }
-  if (e.key === 'Enter') runSearch(this.value.trim());
-  if (e.key === 'Escape') { searchResults.classList.remove('visible'); searchResults.innerHTML = ''; }
-});
-
-// Close dropdown when clicking outside
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.search-box-container')) {
-    searchResults.classList.remove('visible');
+  if (e.key === 'Enter') {
+    const q = this.value.trim();
+    if (q) {
+      window.open(buildScholarURL(q), '_blank', 'noopener,noreferrer');
+    }
   }
 });
 
-// Pre-load sitemap in background after page settles
-setTimeout(loadSitemap, 1000);
+// Keep href fresh as user types
+searchInput.addEventListener('input', function() {
+  const q = this.value.trim();
+  searchBtn.href = q ? buildScholarURL(q) : '#';
+});
 </script>
 
 </body>
