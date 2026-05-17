@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Engineering Education — Betul Bilgin</title>
+<script src="/nav.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:            #f4f5f8;
+  --surface:       #ffffff;
+  --surface-2:     #f0f1f6;
+  --border:        rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.16);
+  --text:          #1a1a1e;
+  --text-muted:    #60617a;
+  --text-faint:    #9fa0b4;
+  --navy:          #001E62;
+  --navy-mid:      #003399;
+  --navy-light:    #eaecf5;
+  --red:           #D50032;
+  --red-light:     #fdeaee;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --shadow: 0 2px 12px rgba(0,30,98,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:            #0f1018;
+    --surface:       #1a1b28;
+    --surface-2:     #14151f;
+    --border:        rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.16);
+    --text:          #e8e9f5;
+    --text-muted:    #8889a8;
+    --text-faint:    #5a5b78;
+    --navy:          #7b9fd4;
+    --navy-mid:      #5580c0;
+    --navy-light:    rgba(123,159,212,0.12);
+    --red:           #ff6b8a;
+    --red-light:     rgba(213,0,50,0.12);
+    --shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--navy);
+  color: #fff;
+  padding: 3.5rem 2.5rem 3rem;
+  text-align: center;
+}
+@media (prefers-color-scheme: dark) {
+  .page-hero { background: #0d1433; border-bottom: 1px solid var(--border); }
+}
+
+.page-hero-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 0.75rem;
+}
+
+.page-hero h1 {
+  font-size: clamp(1.75rem, 4vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.9rem;
+  line-height: 1.2;
+}
+
+.page-hero-sub {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.72);
+  max-width: 640px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.65;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.75rem;
+}
+.hero-stat { text-align: center; }
+.hero-stat-num {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #fff;
+  display: block;
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+  display: block;
+}
+
+/* ── STICKY CONTROLS ── */
+.controls-bar {
+  position: sticky;
+  top: 62px;
+  z-index: 90;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,30,98,0.06);
+  padding: 0.85rem 2.5rem;
+}
+
+.controls-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Search */
+.search-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  stroke: var(--text-faint);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 2.75rem 0 2.5rem;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.search-input::placeholder { color: var(--text-faint); }
+.search-input:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px var(--navy-light);
+}
+
+.search-clear {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px; height: 20px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--text-faint);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--bg);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  transition: background 0.15s;
+  padding: 0;
+}
+.search-clear:hover { background: var(--navy); }
+.search-clear.visible { display: flex; }
+
+.result-count {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Filter chips */
+.filter-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-right: 2px;
+  white-space: nowrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.28rem 0.85rem;
+  border-radius: 30px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+  white-space: nowrap;
+}
+.chip:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+  background: var(--navy-light);
+}
+.chip.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.chip-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── MAIN LAYOUT ── */
+.page-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 5rem;
+}
+
+/* ── SECTION HEADERS ── */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2.5rem 0 1.2rem;
+}
+.section-title h2 {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.section-title-line {
+  flex: 1; height: 1px;
+  background: var(--border);
+}
+
+/* ── CARD GRID ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.3rem 1.4rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.15s, transform 0.12s, box-shadow 0.15s;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: default;
+}
+.card[href] { cursor: pointer; }
+.card:hover {
+  border-color: var(--navy);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.6rem;
+  border-radius: 30px;
+  flex-shrink: 0;
+}
+
+.card-icon-wrap {
+  font-size: 22px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.card-desc {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.card-tag {
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: var(--text-faint);
+  background: var(--surface-2);
+  border-radius: 4px;
+  padding: 0.15rem 0.45rem;
+}
+
+.card-link-icon {
+  width: 14px; height: 14px;
+  stroke: var(--text-faint);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  transition: stroke 0.15s;
+}
+.card[href]:hover .card-link-icon { stroke: var(--navy); }
+
+/* Category color map */
+.badge-teaching    { background: #e8f5e9; color: #1b5e20; }
+.badge-ai          { background: #e3f2fd; color: #0d47a1; }
+.badge-dei         { background: #fce4ec; color: #880e4f; }
+.badge-identity    { background: #fff8e1; color: #f57f17; }
+.badge-assessment  { background: #e8eaf6; color: #283593; }
+.badge-industry    { background: #e0f2f1; color: #004d40; }
+.badge-research    { background: #f3e5f5; color: #4a148c; }
+
+@media (prefers-color-scheme: dark) {
+  .badge-teaching    { background: rgba(27,94,32,0.25);   color: #81c784; }
+  .badge-ai          { background: rgba(13,71,161,0.25);  color: #90caf9; }
+  .badge-dei         { background: rgba(136,14,79,0.25);  color: #f48fb1; }
+  .badge-identity    { background: rgba(245,127,23,0.25); color: #ffcc80; }
+  .badge-assessment  { background: rgba(40,53,147,0.25);  color: #9fa8da; }
+  .badge-industry    { background: rgba(0,77,64,0.25);    color: #80cbc4; }
+  .badge-research    { background: rgba(74,20,140,0.25);  color: #ce93d8; }
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-faint);
+}
+.empty-state-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.empty-state h3 { font-size: 1rem; font-weight: 500; color: var(--text-muted); margin-bottom: 0.5rem; }
+.empty-state p { font-size: 0.85rem; }
+
+/* ── HIGHLIGHTED CARD (featured) ── */
+.card.featured {
+  border-left: 3px solid var(--navy);
+  background: linear-gradient(135deg, var(--surface) 0%, var(--navy-light) 100%);
+}
+@media (prefers-color-scheme: dark) {
+  .card.featured { background: linear-gradient(135deg, var(--surface) 0%, rgba(123,159,212,0.08) 100%); }
+}
+
+/* ── BACK TO TOP ── */
+.back-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3rem;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  transition: color 0.15s;
+}
+.back-top:hover { color: var(--navy); }
+
+/* ── FOOTER ── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 2.5rem;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  text-align: center;
+}
+.footer a { color: inherit; text-decoration: none; }
+.footer a:hover { color: var(--navy); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .page-hero, .controls-bar, .page-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (max-width: 640px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .page-hero { padding: 2.5rem 1.25rem 2rem; }
+  .controls-bar { padding: 0.75rem 1.25rem; }
+  .page-body { padding: 1.5rem 1.25rem 4rem; }
+  .hero-stats { gap: 1.5rem; }
+  .search-row { flex-wrap: wrap; }
+  .result-count { width: 100%; text-align: right; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+
+<body>
+<!-- nav.js injects the nav bar automatically -->
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <p class="page-hero-eyebrow">Betul Bilgin · betulbilgin.com</p>
+  <h1>Engineering Education</h1>
+  <p class="page-hero-sub">
+    A curated knowledge base covering pedagogy, research, identity, technology,
+    and equity in engineering education — grounded in ongoing scholarship and classroom practice.
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num" id="totalCount">—</span>
+      <span class="hero-stat-label">Topics</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">7</span>
+      <span class="hero-stat-label">Categories</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">10+</span>
+      <span class="hero-stat-label">Years Research</span>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY CONTROLS -->
+<div class="controls-bar">
+  <div class="controls-inner">
+    <div class="search-row">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" id="searchInput" type="text"
+          placeholder="Search topics, methods, concepts…"
+          autocomplete="off" spellcheck="false" />
+        <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
+      </div>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Filter:</span>
+      <div id="filterChips"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<main class="page-body">
+  <div id="cardGrid" class="card-grid"></div>
+
+  <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    ↑ Back to top
+  </button>
+</main>
+
+<footer class="footer">
+  © Betul Bilgin · Clinical Professor, Chemical Engineering · University of Illinois Chicago ·
+  <a href="mailto:bbilgin@uic.edu">bbilgin@uic.edu</a>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   CATEGORIES
+════════════════════════════════════════════════════════════ */
+const CATEGORIES = [
+  { id: 'all',        label: 'All Topics',       dot: '#64748b' },
+  { id: 'teaching',   label: 'Teaching Methods',  dot: '#16a34a' },
+  { id: 'ai',         label: 'AI & Technology',   dot: '#2563eb' },
+  { id: 'dei',        label: 'DEI & Inclusion',   dot: '#db2777' },
+  { id: 'identity',   label: 'Professional Identity', dot: '#d97706' },
+  { id: 'assessment', label: 'Assessment',        dot: '#4f46e5' },
+  { id: 'industry',   label: 'Industry Integration', dot: '#0d9488' },
+  { id: 'research',   label: 'Research Methods',  dot: '#9333ea' },
+];
+
+const CAT_META = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
+
+/* ════════════════════════════════════════════════════════════
+   TOPIC DATA
+════════════════════════════════════════════════════════════ */
+const TOPICS = [
+  /* ── Teaching Methods ── */
+  {
+    id: 'active-learning',
+    cat: 'teaching',
+    icon: '🧩',
+    title: 'Active Learning',
+    desc: 'Moves students from passive listeners to active participants. Techniques include think-pair-share, peer instruction, polling, and in-class problem solving. Research consistently shows improved conceptual understanding and retention over lecture-only formats.',
+    tags: ['Pedagogy', 'Student Engagement', 'In-Class'],
+    featured: true,
+    url: null,
+  },
+  {
+    id: 'flipped-classroom',
+    cat: 'teaching',
+    icon: '🔄',
+    title: 'Flipped Classroom',
+    desc: 'Students engage with lecture content (videos, readings) before class, reserving face-to-face time for problem-solving, discussion, and application. Particularly effective in thermodynamics and material & energy balances courses.',
+    tags: ['Blended Learning', 'Pre-Class', 'Application'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'pbl',
+    cat: 'teaching',
+    icon: '🔎',
+    title: 'Problem-Based Learning',
+    desc: 'Students learn content through the context of complex, real-world problems rather than direct instruction. Develops critical thinking, teamwork, and self-directed learning — skills employers consistently rank as top priorities.',
+    tags: ['Critical Thinking', 'Teamwork', 'Real-World'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'project-based',
+    cat: 'teaching',
+    icon: '🏗️',
+    title: 'Project-Based Learning',
+    desc: 'Semester-long or multi-week design projects give students sustained experience tackling authentic engineering challenges. Integrates technical knowledge with communication, project management, and iteration skills.',
+    tags: ['Design', 'Long-Term', 'Collaboration'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'cooperative-learning',
+    cat: 'teaching',
+    icon: '🤝',
+    title: 'Cooperative Learning',
+    desc: 'Structured small-group methods — including POGIL (Process Oriented Guided Inquiry Learning) and jigsaw — that hold each team member accountable for both individual mastery and group success.',
+    tags: ['POGIL', 'Small Group', 'Accountability'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'case-studies',
+    cat: 'teaching',
+    icon: '📋',
+    title: 'Case-Based Teaching',
+    desc: 'Industry case studies ground abstract theory in real engineering decisions — accidents, design tradeoffs, and ethical dilemmas. Thermodynamics and kinetics cases bridge the gap between textbook problems and plant-floor realities.',
+    tags: ['Industry', 'Ethics', 'Context'],
+    featured: false,
+    url: null,
+  },
+
+  /* ── AI & Technology ── */
+  {
+    id: 'gen-ai-education',
+    cat: 'ai',
+    icon: '🤖',
+    title: 'Generative AI in ChE Courses',
+    desc: 'Rebuilding thermodynamics, material & energy balances, and kinetics courses with AI tools. Students use LLMs to check problem setups, generate study guides, and explore concepts — while faculty study perception, misuse risk, and learning outcomes.',
+    tags: ['LLMs', 'ChatGPT', 'Course Redesign'],
+    featured: true,
+    url: 'https://peer.asee.org/generative-ai-in-chemical-engineering-education-rebuilding-thermodynamics-material-and-energy-balances-and-kinetics-courses-with-ai-and-chemical-engineering-students-perception-of-ai',
+  },
+  {
+    id: 'student-ai-perception',
+    cat: 'ai',
+    icon: '💬',
+    title: 'Student Perceptions of AI',
+    desc: 'Survey research exploring how undergraduate chemical engineers perceive generative AI: trust levels, use patterns, academic integrity concerns, and perceived impact on learning. Findings inform evidence-based AI policies.',
+    tags: ['Survey', 'Academic Integrity', 'Attitudes'],
+    featured: false,
+    url: 'https://peer.asee.org/generative-ai-in-chemical-engineering-education-rebuilding-thermodynamics-material-and-energy-balances-and-kinetics-courses-with-ai-and-chemical-engineering-students-perception-of-ai',
+  },
+  {
+    id: 'data-science-che',
+    cat: 'ai',
+    icon: '📊',
+    title: 'Data Science Integration',
+    desc: 'Embedding Python, data analysis, and computational thinking into core chemical engineering courses. Students apply pandas, regression, and visualization to process data — preparing them for data-driven industrial roles.',
+    tags: ['Python', 'Computation', 'Curriculum'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'digital-tools',
+    cat: 'ai',
+    icon: '🖥️',
+    title: 'Digital Teaching Tools',
+    desc: 'Effective use of LMS platforms (Canvas, Blackboard), polling tools (Poll Everywhere, iClicker), simulation software (Aspen, MATLAB), and collaborative platforms (Miro, Padlet) to enhance engagement and feedback.',
+    tags: ['LMS', 'Simulation', 'EdTech'],
+    featured: false,
+    url: null,
+  },
+
+  /* ── DEI & Inclusion ── */
+  {
+    id: 'dei-che',
+    cat: 'dei',
+    icon: '🌍',
+    title: 'DEI in Chemical Engineering',
+    desc: 'A case study of UIC\'s ChE department examining structural and cultural changes that foster belonging for women, underrepresented minorities, and first-generation students. Covers recruitment, retention, curriculum, and climate.',
+    tags: ['Belonging', 'Retention', 'Climate'],
+    featured: true,
+    url: 'https://peer.asee.org/fostering-diversity-equity-and-inclusion-in-engineering-education-a-case-study-of-uic-chemical-engineering-department',
+  },
+  {
+    id: 'low-income-stem',
+    cat: 'dei',
+    icon: '🎓',
+    title: 'Supporting Low-Income High-Achievers',
+    desc: 'NSF S-STEM funded program at UIC targeting high-achieving, financially constrained engineering students. Provides scholarships, mentoring, cohort community, and career support — with documented impact on GPA and retention.',
+    tags: ['NSF S-STEM', 'Financial Aid', 'Cohort Model'],
+    featured: false,
+    url: 'https://engineering.uic.edu/news-stories/new-program-aimed-at-helping-low-income-high-achieving-students/',
+  },
+  {
+    id: 'first-gen',
+    cat: 'dei',
+    icon: '🏠',
+    title: 'First-Generation Engineers',
+    desc: 'First-generation college students face distinct challenges: hidden curriculum, imposter syndrome, and limited social capital. Effective interventions include explicit norms-setting, peer mentoring, and career panels from relatable role models.',
+    tags: ['First-Gen', 'Imposter Syndrome', 'Mentoring'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'inclusive-teaching',
+    cat: 'dei',
+    icon: '♿',
+    title: 'Universal Design for Learning (UDL)',
+    desc: 'Designing courses from the start to be accessible to all learners — multiple means of representation, expression, and engagement. Reduces the need for individual accommodations and benefits every student in the class.',
+    tags: ['Accessibility', 'UDL', 'Equity'],
+    featured: false,
+    url: null,
+  },
+
+  /* ── Professional Identity ── */
+  {
+    id: 'eng-identity',
+    cat: 'identity',
+    icon: '🧭',
+    title: 'Engineering Identity Development',
+    desc: 'How students come to see themselves as engineers — the central question of engineering formation. Identity is shaped by performance, recognition, and interest. Students who develop strong engineering identity are more likely to persist and thrive.',
+    tags: ['Formation', 'Belonging', 'Persistence'],
+    featured: true,
+    url: 'https://engineering.uic.edu/news-stories/grant-to-help-students-gain-real-world-insight/',
+  },
+  {
+    id: 'professional-competencies',
+    cat: 'identity',
+    icon: '💼',
+    title: 'Workplace Competency Integration',
+    desc: 'NSF-funded research bridging academic and industrial expectations. Industry mentors reveal what "real" engineers do — communication, iteration, ambiguity navigation — and these competencies are woven into course assignments and feedback.',
+    tags: ['NSF Grant', 'Industry', 'Soft Skills'],
+    featured: false,
+    url: 'https://engineering.uic.edu/news-stories/grant-to-help-students-gain-real-world-insight/',
+  },
+  {
+    id: 'growth-mindset',
+    cat: 'identity',
+    icon: '🌱',
+    title: 'Growth Mindset in Engineering',
+    desc: 'Students who believe intelligence is fixed are more likely to disengage after failure. Explicit growth mindset interventions — framing struggle as learning, using process-focused praise — measurably reduce drop rates in gateway courses.',
+    tags: ['Mindset', 'Motivation', 'Retention'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'career-pathways',
+    cat: 'identity',
+    icon: '🗺️',
+    title: 'Career Pathways & Role Models',
+    desc: 'Exposure to diverse engineering career trajectories — pharma, food science, semiconductors, finance — broadens students\' sense of what chemical engineers do and who can become one. Guest speakers and alumni panels are high-impact, low-cost interventions.',
+    tags: ['Career', 'Role Models', 'Guest Speakers'],
+    featured: false,
+    url: null,
+  },
+
+  /* ── Assessment ── */
+  {
+    id: 'abet',
+    cat: 'assessment',
+    icon: '📋',
+    title: 'ABET Outcomes & Accreditation',
+    desc: 'Engineering programs must demonstrate student achievement of seven ABET student outcomes — from technical problem solving to ethical reasoning. Effective assessment closes the loop: evidence drives curriculum decisions.',
+    tags: ['Accreditation', 'Outcomes', 'Continuous Improvement'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'formative-assessment',
+    cat: 'assessment',
+    icon: '✏️',
+    title: 'Formative Assessment Strategies',
+    desc: 'Low-stakes, frequent feedback mechanisms — exit tickets, muddiest point, quiz corrections, peer review — help instructors adjust in real time and give students actionable information about their learning before high-stakes exams.',
+    tags: ['Feedback', 'Low-Stakes', 'Iteration'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'rubrics',
+    cat: 'assessment',
+    icon: '🗂️',
+    title: 'Rubric Design for Engineering',
+    desc: 'Well-designed rubrics make expectations explicit, improve grading consistency, and give students a roadmap for excellence. Analytical rubrics (separate criteria) outperform holistic rubrics for complex engineering deliverables.',
+    tags: ['Grading', 'Transparency', 'Consistency'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'competency-mapping',
+    cat: 'assessment',
+    icon: '🗃️',
+    title: 'Competency Mapping',
+    desc: 'Mapping course learning outcomes to program outcomes, ABET criteria, and industry competency frameworks. Visual curriculum maps reveal gaps, redundancies, and scaffolding opportunities across the four-year sequence.',
+    tags: ['Curriculum Design', 'Mapping', 'Scaffolding'],
+    featured: false,
+    url: null,
+  },
+
+  /* ── Industry Integration ── */
+  {
+    id: 'senior-design',
+    cat: 'industry',
+    icon: '🏭',
+    title: 'Senior Design Capstone (CHE 396/397)',
+    desc: 'Year-long capstone experience pairing student teams with industry mentors to solve real open-ended problems. Students practice the full engineering process: problem definition, design alternatives, analysis, communication, and iteration.',
+    tags: ['Capstone', 'Open-Ended', 'Mentorship'],
+    featured: true,
+    url: null,
+  },
+  {
+    id: 'industry-mentors',
+    cat: 'industry',
+    icon: '👷',
+    title: 'Industry Mentor Programs',
+    desc: 'Embedding professionals from pharma, energy, food science, and manufacturing into sophomore and junior courses. Mentors guest lecture, review student work, and share career narratives — creating authentic connections before graduation.',
+    tags: ['Guest Speakers', 'Networking', 'Authenticity'],
+    featured: false,
+    url: 'https://engineering.uic.edu/news-stories/grant-to-help-students-gain-real-world-insight/',
+  },
+  {
+    id: 'real-world-problems',
+    cat: 'industry',
+    icon: '⚙️',
+    title: 'Real-World Problem Integration',
+    desc: 'Replacing textbook exercises with industry-sourced problems — actual plant data, realistic constraints, messy numbers — in thermodynamics, kinetics, and balances courses. Students learn that real engineering involves ambiguity and judgment.',
+    tags: ['Authentic Tasks', 'Industry Data', 'Complexity'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'internship-integration',
+    cat: 'industry',
+    icon: '🏢',
+    title: 'Internship & Co-op Integration',
+    desc: 'Connecting classroom learning to internship experiences through structured reflection assignments, return presentations, and portfolio documentation. Helps students transfer learning bidirectionally between campus and workplace.',
+    tags: ['Internship', 'Reflection', 'Transfer'],
+    featured: false,
+    url: null,
+  },
+
+  /* ── Research Methods ── */
+  {
+    id: 'eng-ed-research',
+    cat: 'research',
+    icon: '🔬',
+    title: 'Engineering Education as a Field',
+    desc: 'Engineering education research (EER) is a rigorous discipline drawing on education, sociology, and psychology. It uses empirical methods to study teaching, learning, and the formation of engineering professionals.',
+    tags: ['Field Overview', 'Interdisciplinary', 'Rigor'],
+    featured: true,
+    url: null,
+  },
+  {
+    id: 'mixed-methods',
+    cat: 'research',
+    icon: '📐',
+    title: 'Mixed Methods Research',
+    desc: 'Combining surveys, interviews, observations, and artifact analysis to understand engineering education phenomena. Quantitative data reveals patterns; qualitative data explains why. Mixed designs are especially powerful for identity and equity research.',
+    tags: ['Qualitative', 'Quantitative', 'Surveys'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'validated-instruments',
+    cat: 'research',
+    icon: '📏',
+    title: 'Validated Survey Instruments',
+    desc: 'Key instruments used in EER: Engineering Identity Development Scale (EIDS), Engineering Belongingness Index, ARIES (attitudes toward research), and MSLQ (motivated strategies for learning). Validity evidence matters for interpretation.',
+    tags: ['EIDS', 'Reliability', 'Validity'],
+    featured: false,
+    url: null,
+  },
+  {
+    id: 'nsf-formation',
+    cat: 'research',
+    icon: '🏛️',
+    title: 'NSF Research in Formation of Engineers',
+    desc: 'The NSF Research Initiation in Engineering Formation (RIEF) program funds early-career engineering education researchers. Dr. Bilgin\'s RIEF project integrates social science frameworks into chemical engineering education research.',
+    tags: ['NSF', 'Funding', 'Formation'],
+    featured: false,
+    url: 'https://engineering.uic.edu/news-stories/grant-to-help-students-gain-real-world-insight/',
+  },
+  {
+    id: 'qualitative-inquiry',
+    cat: 'research',
+    icon: '🗣️',
+    title: 'Qualitative Research in EER',
+    desc: 'Interviews, focus groups, and thematic analysis illuminate the lived experience of engineering students. Grounded theory and phenomenology are common frameworks. IRB, member checking, and positionality statements are essential for rigor.',
+    tags: ['Interviews', 'Thematic Analysis', 'IRB'],
+    featured: false,
+    url: null,
+  },
+];
+
+/* ════════════════════════════════════════════════════════════
+   STATE
+════════════════════════════════════════════════════════════ */
+let activeFilter = 'all';
+let searchQuery  = '';
+
+/* ════════════════════════════════════════════════════════════
+   RENDER FILTER CHIPS
+════════════════════════════════════════════════════════════ */
+const filterChipsEl = document.getElementById('filterChips');
+
+function renderChips() {
+  filterChipsEl.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'chip' + (activeFilter === cat.id ? ' active' : '');
+    btn.dataset.cat = cat.id;
+    btn.innerHTML = `<span class="chip-dot" style="background:${activeFilter === cat.id ? '#fff' : cat.dot}"></span>${cat.label}`;
+    btn.addEventListener('click', () => {
+      activeFilter = cat.id;
+      renderChips();
+      renderCards();
+    });
+    filterChipsEl.appendChild(btn);
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   RENDER CARDS
+════════════════════════════════════════════════════════════ */
+const gridEl       = document.getElementById('cardGrid');
+const countEl      = document.getElementById('resultCount');
+const totalCountEl = document.getElementById('totalCount');
+
+function matchesSearch(topic) {
+  if (!searchQuery) return true;
+  const q = searchQuery.toLowerCase();
+  return (
+    topic.title.toLowerCase().includes(q) ||
+    topic.desc.toLowerCase().includes(q) ||
+    topic.tags.some(t => t.toLowerCase().includes(q)) ||
+    (CAT_META[topic.cat]?.label || '').toLowerCase().includes(q)
+  );
+}
+
+function matchesFilter(topic) {
+  return activeFilter === 'all' || topic.cat === activeFilter;
+}
+
+function buildCard(topic) {
+  const cat   = CAT_META[topic.cat] || {};
+  const el    = document.createElement(topic.url ? 'a' : 'div');
+  el.className = 'card' + (topic.featured ? ' featured' : '');
+  if (topic.url) {
+    el.href   = topic.url;
+    el.target = '_blank';
+    el.rel    = 'noopener noreferrer';
+  }
+
+  const linkIcon = topic.url
+    ? `<svg class="card-link-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`
+    : '';
+
+  el.innerHTML = `
+    <div class="card-top">
+      <span class="card-badge badge-${topic.cat}">${cat.label || topic.cat}</span>
+      <span class="card-icon-wrap">${topic.icon}</span>
+    </div>
+    <div class="card-title">${topic.title}</div>
+    <div class="card-desc">${topic.desc}</div>
+    <div class="card-footer">
+      <div class="card-tags">${topic.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>
+      ${linkIcon}
+    </div>
+  `;
+  return el;
+}
+
+function renderCards() {
+  const visible = TOPICS.filter(t => matchesFilter(t) && matchesSearch(t));
+
+  gridEl.innerHTML = '';
+
+  if (visible.length === 0) {
+    gridEl.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">🔍</div>
+        <h3>No topics found</h3>
+        <p>Try a different search term or clear the filter.</p>
+      </div>`;
+    countEl.textContent = '0 results';
+    return;
+  }
+
+  // Featured first, then alphabetical
+  const sorted = [...visible].sort((a, b) => {
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+    return a.title.localeCompare(b.title);
+  });
+
+  sorted.forEach(t => gridEl.appendChild(buildCard(t)));
+
+  const total = TOPICS.length;
+  countEl.textContent = visible.length < total
+    ? `${visible.length} of ${total} topics`
+    : `${total} topics`;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SEARCH
+════════════════════════════════════════════════════════════ */
+const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('searchClear');
+
+let debounce;
+searchInput.addEventListener('input', () => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => {
+    searchQuery = searchInput.value.trim();
+    searchClear.classList.toggle('visible', searchQuery.length > 0);
+    renderCards();
+  }, 160);
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchQuery = '';
+  searchClear.classList.remove('visible');
+  searchInput.focus();
+  renderCards();
+});
+
+searchInput.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    searchInput.value = '';
+    searchQuery = '';
+    searchClear.classList.remove('visible');
+    renderCards();
+  }
+});
+
+/* ════════════════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════════════════ */
+totalCountEl.textContent = TOPICS.length;
+renderChips();
+renderCards();
+</script>
+</body>
+</html>
