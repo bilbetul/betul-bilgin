@@ -1,20 +1,20 @@
 /*!
- * nav.js — Yasir Bilgin dynamic site navigation
+ * nav.js — Betul Bilgin · betulbilgin.com
  * Drop in any page:  <script src="/nav.js"></script>
  * No dependencies. Desktop: mega-dropdown. Mobile: slide-in drawer.
  * Includes: Google Translate language menu (right side of nav bar).
+ * Color scheme: UIC Navy #001E62 · UIC Red #D50032
  */
 (function () {
   'use strict';
 
-  const SITE      = 'https://yasirbilgin.com';
+  const SITE      = 'https://betulbilgin.com';
   const SITEMAP   = SITE + '/sitemap.xml';
   const NAV_H     = 62;
   const MOBILE_BP = 768;
 
   /* ─────────────────────────────────────────────
      LANGUAGE MENU CONFIG
-     Add or remove languages here as needed.
   ───────────────────────────────────────────── */
   const LANGUAGES = [
     { code: 'en',    label: 'English'  },
@@ -30,10 +30,13 @@
   ];
 
   /* ─────────────────────────────────────────────
-     1. STYLES
+     1. STYLES  —  UIC Navy palette
+     Navy   #001E62
+     Red    #D50032
+     Light  #eaecf5
   ───────────────────────────────────────────── */
   const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Lato:wght@400;700&family=Lora:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
 
 .ynb-nav *,
 .ynb-nav *::before,
@@ -45,34 +48,34 @@
   top: 0; left: 0; right: 0;
   z-index: 2147483646;
   height: ${NAV_H}px;
-  background: #f7f3ec;
-  border-bottom: 1px solid #d5c9b5;
+  background: #001E62;
+  border-bottom: 3px solid #D50032;
   display: flex;
   align-items: center;
   padding: 0 1.5rem;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 /* ── BRAND ── */
 .ynb-brand {
-  font-family: 'Cinzel', serif;
-  font-size: 0.78rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #1c1812;
+  color: #ffffff;
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: color 0.2s;
+  transition: opacity 0.2s;
 }
-.ynb-brand:hover { color: #8B4513; }
+.ynb-brand:hover { opacity: 0.82; }
 
 .ynb-divider {
   width: 1px;
-  height: 24px;
-  background: #d5c9b5;
+  height: 22px;
+  background: rgba(255,255,255,0.22);
   margin: 0 1.4rem;
   flex-shrink: 0;
 }
@@ -93,12 +96,12 @@
   gap: 0.28rem;
   padding: 0 0.85rem;
   height: ${NAV_H}px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #38322a;
+  color: rgba(255,255,255,0.85);
   text-decoration: none;
   background: none;
   border: none;
@@ -111,22 +114,23 @@
   content: '';
   position: absolute;
   bottom: 0; left: 0.85rem; right: 0.85rem;
-  height: 2px;
-  background: #8B4513;
+  height: 3px;
+  background: #D50032;
   transform: scaleX(0);
   transition: transform 0.2s ease;
 }
 .ynb-trigger:hover,
-.ynb-item.ynb-open .ynb-trigger { color: #8B4513; }
+.ynb-item.ynb-open .ynb-trigger { color: #ffffff; }
 .ynb-trigger:hover::after,
 .ynb-item.ynb-open .ynb-trigger::after { transform: scaleX(1); }
 
 .ynb-chevron {
   width: 10px; height: 10px;
+  stroke: rgba(255,255,255,0.7);
   transition: transform 0.25s ease;
-  opacity: 0.6; flex-shrink: 0;
+  flex-shrink: 0;
 }
-.ynb-item.ynb-open .ynb-chevron { transform: rotate(180deg); opacity: 1; }
+.ynb-item.ynb-open .ynb-chevron { transform: rotate(180deg); stroke: #fff; }
 
 /* ── HAMBURGER ── */
 .ynb-hamburger {
@@ -144,11 +148,11 @@
   flex-shrink: 0;
   transition: background 0.15s;
 }
-.ynb-hamburger:hover { background: rgba(139,69,19,0.08); }
+.ynb-hamburger:hover { background: rgba(255,255,255,0.1); }
 .ynb-hamburger span {
   display: block;
   height: 2px;
-  background: #38322a;
+  background: #ffffff;
   border-radius: 2px;
   transition: transform 0.25s ease, opacity 0.2s ease;
   transform-origin: center;
@@ -161,7 +165,10 @@
 .ynb-skeleton { display: flex; align-items: center; gap: 1rem; flex: 1; }
 .ynb-skel-pill {
   height: 12px; border-radius: 6px;
-  background: linear-gradient(90deg, #d5c9b5 25%, #efe8db 50%, #d5c9b5 75%);
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.10) 25%,
+    rgba(255,255,255,0.22) 50%,
+    rgba(255,255,255,0.10) 75%);
   background-size: 200% 100%;
   animation: ynb-shimmer 1.4s infinite;
 }
@@ -176,12 +183,12 @@
   position: fixed;
   min-width: 360px;
   max-width: 720px;
-  background: #f7f3ec;
-  border: 1px solid #d5c9b5;
-  border-top: 3px solid #8B4513;
-  box-shadow: 0 8px 32px rgba(28,24,18,0.18);
+  background: #ffffff;
+  border: 1px solid rgba(0,30,98,0.15);
+  border-top: 3px solid #D50032;
+  box-shadow: 0 8px 32px rgba(0,30,98,0.18);
   padding: 1.4rem 1.6rem 0;
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 8px 8px;
   z-index: 2147483647;
 }
 .ynb-dropdown.ynb-visible { display: block; }
@@ -195,58 +202,64 @@
 
 .ynb-cat-label {
   display: block;
-  font-family: 'Cinzel', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.6rem; font-weight: 600;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: #8B4513; margin-bottom: 0.5rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: #001E62; margin-bottom: 0.5rem;
 }
 .ynb-col-links { display: flex; flex-direction: column; }
 
 .ynb-link {
   display: block;
-  font-family: 'Lora', Georgia, serif;
-  font-size: 0.84rem; color: #38322a;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem; color: #1a1a2e;
   text-decoration: none;
   padding: 0.3rem 0 0.3rem 0.5rem;
   margin-left: -0.5rem;
-  line-height: 1.4;
+  line-height: 1.45;
   border-left: 2px solid transparent;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color 0.15s, border-color 0.15s, background 0.12s;
+  border-radius: 0 4px 4px 0;
 }
-.ynb-link:hover { color: #8B4513; border-left-color: #8B4513; }
+.ynb-link:hover {
+  color: #001E62;
+  border-left-color: #D50032;
+  background: #eaecf5;
+  padding-left: 0.75rem;
+}
 
 .ynb-drop-footer {
-  border-top: 1px solid #d5c9b5;
+  border-top: 1px solid rgba(0,30,98,0.12);
   margin: 0 -1.6rem;
   padding: 0.65rem 1.6rem;
   display: flex; justify-content: flex-end;
 }
 .ynb-drop-footer a {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.68rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: #b5651d; text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: #001E62; text-decoration: none;
   transition: color 0.15s;
 }
-.ynb-drop-footer a:hover { color: #8B4513; }
+.ynb-drop-footer a:hover { color: #D50032; }
 
 /* ── MOBILE DRAWER ── */
 .ynb-drawer {
   position: fixed;
   top: ${NAV_H}px; left: 0; right: 0; bottom: 0;
   z-index: 2147483645;
-  background: #f7f3ec;
+  background: #ffffff;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   transform: translateX(-100%);
   transition: transform 0.28s ease;
-  border-top: 1px solid #d5c9b5;
+  border-top: 1px solid rgba(0,30,98,0.12);
 }
 .ynb-drawer.ynb-drawer-open { transform: translateX(0); }
 
 .ynb-drawer-inner { padding: 0.5rem 0 4rem; }
 
-.ynb-drawer-item { border-bottom: 1px solid #ece7df; }
+.ynb-drawer-item { border-bottom: 1px solid rgba(0,30,98,0.08); }
 
 .ynb-drawer-trigger {
   display: flex;
@@ -254,10 +267,10 @@
   justify-content: space-between;
   width: 100%;
   padding: 1rem 1.5rem;
-  font-family: 'Lato', sans-serif;
-  font-size: 0.75rem; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: #1c1812;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #001E62;
   text-decoration: none;
   background: none; border: none;
   cursor: pointer; text-align: left;
@@ -266,62 +279,64 @@
 }
 .ynb-drawer-trigger:hover,
 .ynb-drawer-item.ynb-drawer-open .ynb-drawer-trigger {
-  color: #8B4513;
-  background: rgba(139,69,19,0.04);
+  color: #D50032;
+  background: #eaecf5;
 }
 
 .ynb-drawer-chevron {
   width: 12px; height: 12px;
   flex-shrink: 0;
+  stroke: #001E62;
   transition: transform 0.25s ease;
-  opacity: 0.45;
+  opacity: 0.5;
 }
 .ynb-drawer-item.ynb-drawer-open .ynb-drawer-chevron {
   transform: rotate(180deg);
   opacity: 1;
+  stroke: #D50032;
 }
 
 .ynb-drawer-sub {
   display: none;
   padding: 0.2rem 1.5rem 1rem 2.2rem;
-  background: rgba(139,69,19,0.025);
+  background: rgba(0,30,98,0.03);
 }
 .ynb-drawer-item.ynb-drawer-open .ynb-drawer-sub { display: block; }
 
 .ynb-drawer-sub-link {
   display: block;
-  font-family: 'Lora', Georgia, serif;
-  font-size: 0.9rem; color: #5c4e3a;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; color: #1a1a2e;
   text-decoration: none;
   padding: 0.5rem 0 0.5rem 0.8rem;
-  border-left: 2px solid #d5c9b5;
+  border-left: 2px solid rgba(0,30,98,0.18);
   margin-bottom: 0.1rem;
   transition: color 0.15s, border-color 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
 .ynb-drawer-sub-link:hover,
 .ynb-drawer-sub-link:active {
-  color: #8B4513;
-  border-left-color: #8B4513;
+  color: #001E62;
+  border-left-color: #D50032;
 }
 
 .ynb-drawer-view-all {
   display: inline-block;
   margin-top: 0.8rem;
-  font-family: 'Lato', sans-serif;
-  font-size: 0.68rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: #b5651d; text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: #001E62; text-decoration: none;
 }
-.ynb-drawer-view-all:hover { color: #8B4513; }
+.ynb-drawer-view-all:hover { color: #D50032; }
 
 .ynb-drawer-subfolder {
-  font-family: 'Cinzel', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.58rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #8B4513;
+  color: #001E62;
   padding: 0.7rem 0 0.3rem 0.8rem;
   margin-top: 0.4rem;
 }
@@ -337,7 +352,7 @@
   position: fixed;
   inset: 0; top: ${NAV_H}px;
   z-index: 2147483644;
-  background: rgba(28,24,18,0.35);
+  background: rgba(0,20,60,0.4);
 }
 .ynb-scrim.ynb-scrim-visible { display: block; }
 
@@ -351,7 +366,6 @@
   flex-shrink: 0;
 }
 
-/* Globe icon button */
 .ynb-lang-btn {
   display: flex;
   align-items: center;
@@ -359,46 +373,46 @@
   height: 32px;
   padding: 0 0.65rem;
   background: none;
-  border: 1px solid #c8bfb0;
+  border: 1px solid rgba(255,255,255,0.30);
   border-radius: 5px;
   cursor: pointer;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  color: #38322a;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.88);
   white-space: nowrap;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 .ynb-lang-btn:hover {
-  border-color: #8B4513;
-  color: #8B4513;
-  background: rgba(139,69,19,0.05);
+  border-color: rgba(255,255,255,0.65);
+  color: #fff;
+  background: rgba(255,255,255,0.08);
 }
 .ynb-lang-btn svg {
   width: 14px; height: 14px;
   flex-shrink: 0;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 .ynb-lang-btn .ynb-lang-chevron {
   width: 8px; height: 8px;
   opacity: 0.5;
+  stroke: rgba(255,255,255,0.8);
   transition: transform 0.2s ease;
 }
-.ynb-lang-wrap.ynb-lang-open .ynb-lang-chevron { transform: rotate(180deg); opacity: 0.8; }
+.ynb-lang-wrap.ynb-lang-open .ynb-lang-chevron { transform: rotate(180deg); opacity: 0.9; }
 
-/* Dropdown panel */
 .ynb-lang-panel {
   display: none;
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 10px);
   right: 0;
   min-width: 160px;
-  background: #f7f3ec;
-  border: 1px solid #d5c9b5;
-  border-top: 3px solid #8B4513;
-  border-radius: 0 0 6px 6px;
-  box-shadow: 0 8px 24px rgba(28,24,18,0.15);
+  background: #ffffff;
+  border: 1px solid rgba(0,30,98,0.15);
+  border-top: 3px solid #D50032;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 8px 24px rgba(0,30,98,0.18);
   z-index: 2147483647;
   padding: 0.4rem 0;
   overflow: hidden;
@@ -409,9 +423,9 @@
   display: block;
   width: 100%;
   padding: 0.52rem 1rem;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.78rem;
-  color: #38322a;
+  color: #1a1a2e;
   text-align: left;
   background: none;
   border: none;
@@ -419,25 +433,22 @@
   transition: background 0.12s, color 0.12s;
   white-space: nowrap;
 }
-.ynb-lang-option:hover { background: rgba(139,69,19,0.07); color: #8B4513; }
-.ynb-lang-option.ynb-lang-active {
-  color: #8B4513;
-  font-weight: 700;
-}
+.ynb-lang-option:hover { background: #eaecf5; color: #001E62; }
+.ynb-lang-option.ynb-lang-active { color: #001E62; font-weight: 700; }
 
-/* Mobile: language row at bottom of drawer */
+/* Mobile language */
 .ynb-drawer-lang {
   padding: 1rem 1.5rem 0.5rem;
-  border-top: 1px solid #ece7df;
+  border-top: 1px solid rgba(0,30,98,0.08);
   margin-top: 0.5rem;
 }
 .ynb-drawer-lang-label {
-  font-family: 'Cinzel', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.58rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #8B4513;
+  color: #001E62;
   margin-bottom: 0.6rem;
   display: block;
 }
@@ -448,38 +459,36 @@
 }
 .ynb-drawer-lang-opt {
   padding: 0.35rem 0.75rem;
-  border: 1px solid #c8bfb0;
+  border: 1px solid rgba(0,30,98,0.20);
   border-radius: 4px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.72rem;
-  color: #38322a;
+  color: #1a1a2e;
   background: none;
   cursor: pointer;
   transition: border-color 0.12s, color 0.12s, background 0.12s;
   -webkit-tap-highlight-color: transparent;
 }
 .ynb-drawer-lang-opt:hover,
-.ynb-drawer-lang-opt:active { border-color: #8B4513; color: #8B4513; background: rgba(139,69,19,0.05); }
-.ynb-drawer-lang-opt.ynb-lang-active { border-color: #8B4513; color: #8B4513; font-weight: 700; }
+.ynb-drawer-lang-opt:active { border-color: #D50032; color: #001E62; background: #eaecf5; }
+.ynb-drawer-lang-opt.ynb-lang-active { border-color: #001E62; color: #001E62; font-weight: 700; }
 
-/* Suppress Google Translate's own toolbar — we drive it via cookie */
+/* Suppress Google Translate toolbar */
 .goog-te-banner-frame,
 .goog-te-banner-frame.skiptranslate { display: none !important; }
 body { top: 0 !important; }
 .goog-te-gadget { display: none !important; }
 
 /* ── RESPONSIVE ── */
-/* Tablet: allow menu wrapping */
 @media (max-width: 1024px) and (min-width: ${MOBILE_BP}px) {
   .ynb-list { flex-wrap: wrap; align-content: flex-start; }
   .ynb-trigger { padding: 0 0.6rem; }
 }
-/* Mobile: full drawer */
 @media (max-width: ${MOBILE_BP - 1}px) {
   .ynb-divider   { display: none; }
   .ynb-list      { display: none; }
   .ynb-hamburger { display: flex; }
-  .ynb-lang-wrap { display: none; } /* shown inside drawer instead */
+  .ynb-lang-wrap { display: none; }
 }
 @media (min-width: ${MOBILE_BP}px) {
   .ynb-drawer { display: none !important; }
@@ -541,7 +550,7 @@ body { top: 0 !important; }
   }
 
   /* ─────────────────────────────────────────────
-     3. FETCH
+     3. FETCH  (sitemap with two CORS fallbacks)
   ───────────────────────────────────────────── */
   async function fetchSitemap() {
     try {
@@ -600,31 +609,19 @@ body { top: 0 !important; }
      5. LANGUAGE MENU
   ───────────────────────────────────────────── */
   function getCurrentLang() {
-    // GT may rewrite cookie to /tr/tr — grab last segment only.
-    // Also handle zh-CN style codes with a hyphen.
     const m = document.cookie.match(/googtrans=\/[^/]+\/([^;,\s]+)/i);
     const code = m ? m[1] : 'en';
     return LANGUAGES.find(l => l.code === code) ? code : 'en';
   }
 
   function nukeGTCookies() {
-    const hostname = location.hostname;           // yasirbilgin.com
-    const bare     = hostname.replace(/^www\./, '').replace(/^[^.]+\./, ''); // yasirbilgin.com
-    const sub      = hostname;                    // yasirbilgin.com
+    const hostname = location.hostname;
+    const bare     = hostname.replace(/^www\./, '').replace(/^[^.]+\./, '');
+    const sub      = hostname;
     const exp      = 'expires=Thu, 01 Jan 1970 00:00:00 GMT; max-age=0';
-
-    // Every realistic domain GT might have used to set the cookie
-    const domains = [
-      '',           // no domain attr
-      sub,          // yasirbilgin.com
-      '.'+ sub,     // .yasirbilgin.com
-      bare,         // yasirbilgin.com
-      '.'+ bare,    // .yasirbilgin.com
-    ];
-
-    const paths     = ['/'];
+    const domains  = ['', sub, '.'+ sub, bare, '.'+ bare];
+    const paths    = ['/'];
     const sameSites = ['', '; SameSite=Lax', '; SameSite=None; Secure'];
-
     domains.forEach(d => {
       const dc = d ? 'domain='+ d +'; ' : '';
       paths.forEach(p => {
@@ -637,23 +634,16 @@ body { top: 0 !important; }
 
   function switchLanguage(code) {
     nukeGTCookies();
-
     if (code !== 'en') {
       const hostname = location.hostname;
       const bare     = hostname.replace(/^www\./, '').replace(/^[^.]+\./, '');
-      // Write on every domain variation with every SameSite variant
       [hostname, '.'+ hostname, bare, '.'+ bare].forEach(d => {
         document.cookie = 'googtrans=/en/'+ code +'; path=/; domain='+ d;
         document.cookie = 'googtrans=/en/'+ code +'; path=/; domain='+ d +'; SameSite=None; Secure';
       });
       document.cookie = 'googtrans=/en/'+ code +'; path=/';
     }
-
-    // Small wait to ensure cookie writes are committed, then navigate fresh
-    setTimeout(() => {
-      const url = location.href.split('#')[0];
-      location.href = url;
-    }, 50);
+    setTimeout(() => { location.href = location.href.split('#')[0]; }, 50);
   }
 
   function loadGoogleTranslate() {
@@ -661,19 +651,12 @@ body { top: 0 !important; }
     anchor.id = 'google_translate_element';
     anchor.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;';
     document.body.appendChild(anchor);
-
     window.googleTranslateElementInit = function () {
       new google.translate.TranslateElement(
-        {
-          pageLanguage: 'en',
-          autoDisplay: false,
-          // Suppress the floating GT toolbar entirely
-          gaTrack: false,
-        },
+        { pageLanguage: 'en', autoDisplay: false, gaTrack: false },
         'google_translate_element'
       );
     };
-
     const s = document.createElement('script');
     s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
     s.async = true;
@@ -684,7 +667,6 @@ body { top: 0 !important; }
     const current = getCurrentLang();
     const currentLang = LANGUAGES.find(l => l.code === current) || LANGUAGES[0];
 
-    /* ── Desktop widget ── */
     const wrap = el('div', { className: 'ynb-lang-wrap' });
     wrap.setAttribute('aria-label', 'Language selector');
 
@@ -700,7 +682,6 @@ body { top: 0 !important; }
     btn.appendChild(chevronSVG('ynb-lang-chevron'));
 
     const panel = el('div', { className: 'ynb-lang-panel', role: 'menu' });
-
     LANGUAGES.forEach(lang => {
       const opt = document.createElement('button');
       opt.className = 'ynb-lang-option' + (lang.code === current ? ' ynb-lang-active' : '');
@@ -714,14 +695,12 @@ body { top: 0 !important; }
     btn.addEventListener('click', e => {
       e.stopPropagation();
       const isOpen = wrap.classList.contains('ynb-lang-open');
-      // Close any open nav dropdowns first
       document.dispatchEvent(new MouseEvent('click'));
       if (!isOpen) {
         wrap.classList.add('ynb-lang-open');
         btn.setAttribute('aria-expanded', 'true');
       }
     });
-
     document.addEventListener('click', () => {
       wrap.classList.remove('ynb-lang-open');
       btn.setAttribute('aria-expanded', 'false');
@@ -743,7 +722,6 @@ body { top: 0 !important; }
     const section = el('div', { className: 'ynb-drawer-lang' });
     section.appendChild(el('span', { className: 'ynb-drawer-lang-label', textContent: 'Language' }));
     const grid = el('div', { className: 'ynb-drawer-lang-grid' });
-
     LANGUAGES.forEach(lang => {
       const btn = document.createElement('button');
       btn.className = 'ynb-drawer-lang-opt' + (lang.code === current ? ' ynb-lang-active' : '');
@@ -752,7 +730,6 @@ body { top: 0 !important; }
       btn.addEventListener('click', () => switchLanguage(lang.code));
       grid.appendChild(btn);
     });
-
     section.appendChild(grid);
     drawerInner.appendChild(section);
   }
@@ -765,7 +742,7 @@ body { top: 0 !important; }
 
     function closeAll() {
       if (openDrop) { openDrop.classList.remove('ynb-visible'); openDrop = null; }
-      if (openLi)   {
+      if (openLi) {
         openLi.classList.remove('ynb-open');
         openLi.querySelector('.ynb-trigger')?.setAttribute('aria-expanded', 'false');
         openLi = null;
@@ -859,7 +836,6 @@ body { top: 0 !important; }
         trig.appendChild(chevronSVG('ynb-drawer-chevron'));
 
         const sub = el('div', { className: 'ynb-drawer-sub' });
-
         const groupMap = new Map();
         subs.forEach(p => {
           const g = p.group || '';
@@ -876,7 +852,6 @@ body { top: 0 !important; }
             textContent: p.name,
           })));
         });
-
         sub.appendChild(el('a', { className: 'ynb-drawer-view-all', href: catUrl, textContent: `View all in ${label} →` }));
 
         trig.addEventListener('click', () => {
@@ -897,9 +872,7 @@ body { top: 0 !important; }
       inner.appendChild(item);
     });
 
-    // Language section at the bottom of the mobile drawer
     buildDrawerLangSection(inner);
-
     drawer.innerHTML = '';
     drawer.appendChild(inner);
   }
@@ -917,7 +890,7 @@ body { top: 0 !important; }
     nav.setAttribute('role', 'navigation');
     nav.setAttribute('aria-label', 'Site navigation');
 
-    nav.appendChild(el('a', { className: 'ynb-brand', href: SITE, textContent: 'Yasir Bilgin' }));
+    nav.appendChild(el('a', { className: 'ynb-brand', href: SITE, textContent: 'Betul Bilgin' }));
     nav.appendChild(el('span', { className: 'ynb-divider', 'aria-hidden': 'true' }));
 
     const list = el('ul', { className: 'ynb-list', role: 'menubar' });
@@ -930,7 +903,6 @@ body { top: 0 !important; }
     list.appendChild(skel);
     nav.appendChild(list);
 
-    // Language menu — desktop (right side, before hamburger)
     nav.appendChild(buildLangMenu());
 
     const ham = el('button', {
@@ -951,7 +923,7 @@ body { top: 0 !important; }
     document.body.style.paddingTop =
       (parseInt(document.body.style.paddingTop, 10) || 0) + NAV_H + 'px';
 
-    function openDrawer()  {
+    function openDrawer() {
       drawer.classList.add('ynb-drawer-open');
       scrim.classList.add('ynb-scrim-visible');
       ham.classList.add('ynb-active');
