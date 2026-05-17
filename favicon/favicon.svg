@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="64" height="64" rx="11" fill="#001E62"/>
+
+  <!-- Flask neck -->
+  <rect x="24" y="7" width="16" height="18" rx="3" fill="#ffffff"/>
+
+  <!-- Flask body (trapezoid + rounded base) -->
+  <path d="M18 25 L46 25 L54 55 Q54 62 32 62 Q10 62 10 55 Z" fill="#ffffff"/>
+
+  <!-- Liquid fill (light blue) -->
+  <path d="M13.5 42 L50.5 42 L54 55 Q54 62 32 62 Q10 62 10 55 Z" fill="#7b9fd4" opacity="0.88"/>
+  <ellipse cx="32" cy="42" rx="18.5" ry="3.2" fill="#7b9fd4" opacity="0.88"/>
+
+  <!-- UIC Red accent strip -->
+  <rect x="1" y="58.5" width="62" height="4.5" rx="3" fill="#D50032"/>
+</svg>
