@@ -16,6 +16,16 @@
   /* ─────────────────────────────────────────────
      LANGUAGE MENU CONFIG
   ───────────────────────────────────────────── */
+  /* ─────────────────────────────────────────────
+     EXTRA NAV LINKS  (right side, before language menu)
+     Add / remove entries here as needed.
+  ───────────────────────────────────────────── */
+  const EXTRA_LINKS = [
+    { label: 'UIC Profile',  url: 'https://che.uic.edu/profiles/betul-bilgin/',                external: true  },
+    { label: 'Publications', url: 'https://scholar.google.com/citations?user=vX6njtsAAAAJ&hl=en', external: true },
+    { label: 'Contact',      url: 'mailto:bbilgin@uic.edu',                                    external: false },
+  ];
+
   const LANGUAGES = [
     { code: 'en',    label: 'English'  },
     { code: 'tr',    label: 'Türkçe'   },
@@ -356,13 +366,45 @@
 }
 .ynb-scrim.ynb-scrim-visible { display: block; }
 
+/* ── EXTRA LINKS (right side) ── */
+.ynb-extras {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.ynb-extra-link {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 0.65rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
+}
+.ynb-extra-link:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.10);
+}
+.ynb-extras-sep {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.20);
+  margin: 0 0.3rem;
+  flex-shrink: 0;
+}
+
 /* ── LANGUAGE MENU ── */
 .ynb-lang-wrap {
   position: relative;
   display: flex;
   align-items: center;
-  margin-left: auto;
-  padding-left: 0.75rem;
+  padding-left: 0.5rem;
   flex-shrink: 0;
 }
 
@@ -489,6 +531,8 @@ body { top: 0 !important; }
   .ynb-list      { display: none; }
   .ynb-hamburger { display: flex; }
   .ynb-lang-wrap { display: none; }
+  .ynb-extras    { display: none; }
+  .ynb-extras-sep { display: none; }
 }
 @media (min-width: ${MOBILE_BP}px) {
   .ynb-drawer { display: none !important; }
@@ -872,6 +916,22 @@ body { top: 0 !important; }
       inner.appendChild(item);
     });
 
+    // Extra links in mobile drawer (top section)
+    const extraSection = el('div', { className: 'ynb-drawer-lang' }); // reuse padding style
+    extraSection.style.borderBottom = '1px solid rgba(0,30,98,0.08)';
+    extraSection.style.borderTop = 'none';
+    extraSection.style.marginTop = '0';
+    extraSection.style.paddingTop = '0.75rem';
+    extraSection.style.paddingBottom = '0.75rem';
+    EXTRA_LINKS.forEach(link => {
+      const a = el('a', { className: 'ynb-drawer-trigger', href: link.url, textContent: link.label });
+      a.style.padding = '0.5rem 1.5rem';
+      a.style.fontSize = '0.75rem';
+      if (link.external) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+      extraSection.appendChild(a);
+    });
+    inner.insertBefore(extraSection, inner.firstChild);
+
     buildDrawerLangSection(inner);
     drawer.innerHTML = '';
     drawer.appendChild(inner);
@@ -902,6 +962,16 @@ body { top: 0 !important; }
     });
     list.appendChild(skel);
     nav.appendChild(list);
+
+    // Extra links — desktop (right side, before language menu)
+    const extrasDiv = el('div', { className: 'ynb-extras' });
+    EXTRA_LINKS.forEach(link => {
+      const a = el('a', { className: 'ynb-extra-link', href: link.url, textContent: link.label });
+      if (link.external) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+      extrasDiv.appendChild(a);
+    });
+    nav.appendChild(extrasDiv);
+    nav.appendChild(el('span', { className: 'ynb-extras-sep', 'aria-hidden': 'true' }));
 
     nav.appendChild(buildLangMenu());
 
