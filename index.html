@@ -1,9 +1,708 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Yasir Bilgin</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Yasir Bilgin</title>
+
+<script src="https://yasirbilgin.com/nav.js"></script> 
+<link rel="icon" type="image/x-icon"   href="/favicon/favicon.ico">
+<link rel="icon" type="image/svg+xml"  href="/favicon/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180"    href="/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/favicon/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --border: rgba(0,0,0,0.10);
+  --border-strong: rgba(0,0,0,0.20);
+  --text: #1a1a18;
+  --text-muted: #7a7872;
+  --text-faint: #b0ada5;
+  --accent: #2d4a3e;
+  --accent-light: #e8f0ec;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --fs-12: 0.75rem;
+  --fs-14: 0.875rem;
+  --fs-15: 0.9375rem;
+  --fs-17: 1.0625rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131310;
+    --surface: #1e1e1a;
+    --border: rgba(255,255,255,0.10);
+    --border-strong: rgba(255,255,255,0.22);
+    --text: #f0ede5;
+    --text-muted: #908d85;
+    --text-faint: #7a766e;
+    --accent: #7fbf9e;
+    --accent-light: rgba(127,191,158,0.10);
+  }
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  min-height: 100vh;
+  padding-top: 62px;
+}
+
+/* HERO */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3.5rem 1.5rem 2rem;
+  animation: fadeUp 0.5s ease both;
+}
+
+.hero-eyebrow {
+  font-size: var(--fs-12);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.hero-sub {
+  font-size: var(--fs-15);
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* SEARCH */
+.search-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  animation: fadeUp 0.5s 0.05s ease both;
+}
+
+.search-box-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.search-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  height: 44px;
+  padding: 0 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--fs-14);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.search-input::placeholder { color: var(--text-faint); }
+.search-input:focus { border-color: var(--accent); }
+.search-input:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent); }
+
+.search-btn {
+  height: 44px;
+  padding: 0 1.25rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: 'DM Sans', sans-serif;
+  font-size: var(--fs-14);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.search-btn:hover { opacity: 0.88; }
+
+.search-btn svg {
+  width: 15px;
+  height: 15px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* SEARCH DROPDOWN */
+.search-results {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  max-height: 340px;
+  overflow-y: auto;
+  flex-direction: column;
+  gap: 2px;
+  display: none;
+}
+
+.search-results.visible {
+  display: flex;
+}
+
+.search-result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background 0.12s;
+}
+
+.search-result-item:hover {
+  background: var(--accent-light);
+}
+
+.result-title {
+  font-size: var(--fs-14);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.result-title mark {
+  background: transparent;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.result-path {
+  font-size: var(--fs-12);
+  color: var(--text-faint);
+}
+
+.search-status {
+  font-size: var(--fs-12);
+  color: var(--text-faint);
+  padding: 0.4rem 0.75rem;
+  text-align: center;
+}
+
+/* SECTION */
+.section-wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem 4rem;
+  animation: fadeUp 0.5s 0.1s ease both;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.4rem;
+}
+
+.section-label {
+  font-size: var(--fs-12);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.15s, transform 0.12s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-light);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card:hover::before { opacity: 1; }
+
+.card-icon { font-size: 26px; margin-bottom: 4px; position: relative; }
+
+.card-name {
+  font-size: var(--fs-17);
+  font-weight: 500;
+  color: var(--text);
+  position: relative;
+}
+
+.card-desc {
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+  line-height: 1.55;
+  position: relative;
+  flex: 1;
+}
+
+.card-url {
+  font-size: var(--fs-12);
+  color: var(--text-faint);
+  margin-top: 4px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* REFERENCES */
+.ref-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ref-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0.45rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 30px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: var(--fs-12);
+  font-weight: 500;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.ref-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--accent-light);
+}
+
+.ref-btn-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ANIMATION */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 720px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .search-wrap, .section-wrap { padding-left: 1.2rem; padding-right: 1.2rem; }
+}
+
+@media (max-width: 500px) {
+  .grid { grid-template-columns: 1fr; }
+  .section-wrap { padding: 0 1.2rem 3rem; }
+  .search-row { flex-wrap: wrap; }
+  .search-btn { width: 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
 </head>
+
 <body>
-  <h1>Hello from GitHub Pages</h1>
+
+<main>
+<section class="hero">
+  <p class="hero-eyebrow">Knowledge · Reflection · Community</p>
+  <h1 style="font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; margin-bottom: 0.75rem;">Yasir Bilgin — Knowledge Hub</h1>
+  <p class="hero-sub">Writings, reflections, and community resources in one place. More sections coming soon.</p>
+</section>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-box-container">
+    <div class="search-row">
+      <input
+        class="search-input"
+        id="searchInput"
+        type="text"
+        placeholder="Search all content on yasirbilgin.com…"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="search-btn" id="searchBtn">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Search
+      </button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- BROWSE SECTIONS -->
+<div class="section-wrap" style="padding-top: 1.5rem;">
+  <div class="section-header">
+    <span class="section-label">Browse all sections</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="grid" id="cardGrid"></div>
+</div>
+
+<!-- REFERENCES & TOOLS -->
+<div class="section-wrap" style="padding-bottom: 4rem;">
+  <div class="section-header">
+    <span class="section-label">References &amp; Tools</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="ref-grid" id="refGrid"></div>
+</div>
+
+<footer class="footer">
+  © Yasir Bilgin · yasirbilgin.com
+</footer>
+</main>
+
+<script>
+const BASE = 'https://yasirbilgin.com';
+
+const SECTIONS = [
+  {
+    icon: '🕌',
+    name: 'Islamic Studies',
+    desc: 'Disciplines, Qur\'an, and scholarly tradition',
+    url: BASE + '/islamic-studies/disciplines/usul-fiqh.html',
+    display: 'yasirbilgin.com/islamic-studies'
+  },
+  {
+    icon: '🤲',
+    name: 'Spirituality',
+    desc: 'Fasting, the heart, and inner preparation',
+    url: BASE + '/spirituality/preparing-the-vessel.html',
+    display: 'yasirbilgin.com/spirituality'
+  },
+  {
+    icon: '🛐',
+    name: 'Religion',
+    desc: 'Comparative religion, shared themes, and truth',
+    url: BASE + '/religion/shared-themes-of-religions.html',
+    display: 'yasirbilgin.com/religion'
+  },
+  {
+    icon: '🤝',
+    name: 'Hizmet Community',
+    desc: 'Resources and toolbox for the Hizmet movement',
+    url: BASE + '/hizmet-community/resources-and-toolbox.html',
+    display: 'yasirbilgin.com/hizmet-community'
+  },
+  {
+    icon: '✈️',
+    name: 'Travels',
+    desc: 'Journey through civilizations and cultures',
+    url: BASE + '/travels/influential-cultures.html',
+    display: 'yasirbilgin.com/travels'
+  },
+  {
+    icon: '📚',
+    name: 'Essentials',
+    desc: 'Essential books, global history, and universal principles',
+    url: BASE + '/essentials/essential-books.html',
+    display: 'yasirbilgin.com/essentials'
+  },
+  {
+    icon: '🎨',
+    name: 'Arts & Crafts',
+    desc: 'Calligraphy, music, culinary arts, and design',
+    url: BASE + '/arts/the-five-arts.html',
+    display: 'yasirbilgin.com/arts'
+  },
+  {
+    icon: '🧠',
+    name: 'MBTI',
+    desc: 'Personality, the ideal person, and Ramadan guides',
+    url: BASE + '/mbti/insan-kamil.html',
+    display: 'yasirbilgin.com/mbti'
+  },
+  {
+    icon: '🗣️',
+    name: 'Linguistics',
+    desc: 'World languages and communication studies',
+    url: BASE + '/linguistics/world-languages.html',
+    display: 'yasirbilgin.com/linguistics'
+  },
+  {
+    icon: '🖥️',
+    name: 'DevOps / SRE',
+    desc: 'DevOps responsibilities and infrastructure notes',
+    url: BASE + '/devops/responsibilities.html',
+    display: 'yasirbilgin.com/devops'
+  },
+];
+
+const REFERENCES = [
+  { icon: '📰', name: 'Medium Articles',         url: 'https://medium.com/@yasirbil',           external: true },
+  { icon: '🌍', name: 'Global History',          url: BASE + '/essentials/global-history.html', external: false },
+  { icon: '💡', name: 'Universal Principles',    url: BASE + '/essentials/universal-principles.html', external: false },
+  { icon: '📚', name: 'Essential Books',         url: BASE + '/essentials/essential-books.html', external: false },
+  { icon: '🕌', name: 'Essential Books — Islam', url: BASE + '/essentials/essential-books--islam.html', external: false },
+  { icon: '🎓', name: 'Madrasa Books',           url: BASE + '/islamic-studies/madrasa-books.html', external: false },
+  { icon: '🔢', name: '500 Facts',               url: BASE + '/essentials/500-facts.html', external: false },
+  { icon: '📄', name: 'CRISD Papers',            url: 'https://mailchi.mp/939b3b8716af/ktphane', external: true },
+  { icon: '🔗', name: 'Usul.ai',                 url: 'https://usul.ai/', external: true },
+  { icon: '🔗', name: 'OpenAlex Works',          url: 'https://openalex.org/works', external: true },
+];
+
+// Render section cards
+const grid = document.getElementById('cardGrid');
+SECTIONS.forEach(s => {
+  const a = document.createElement('a');
+  a.className = 'card';
+  a.href = s.url;
+  a.innerHTML = `
+    <div class="card-icon">${s.icon}</div>
+    <div class="card-name">${s.name}</div>
+    <div class="card-desc">${s.desc}</div>
+    <div class="card-url">${s.display}</div>
+  `;
+  grid.appendChild(a);
+});
+
+// Render reference pills
+const refGrid = document.getElementById('refGrid');
+REFERENCES.forEach(r => {
+  const a = document.createElement('a');
+  a.className = 'ref-btn';
+  a.href = r.url;
+  if (r.external) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+  a.innerHTML = `<span class="ref-btn-dot"></span>${r.icon} ${r.name}${r.external ? ' ↗' : ''}`;
+  refGrid.appendChild(a);
+});
+
+// ── Sitemap-powered live search ──────────────────────────────────────────────
+
+const searchInput   = document.getElementById('searchInput');
+const searchBtn     = document.getElementById('searchBtn');
+const searchResults = document.getElementById('searchResults');
+let activeIndex = -1;
+
+let sitemapPages = []; // { title, path, url }
+let sitemapLoaded = false;
+
+// Convert a URL path into a readable title
+// e.g. "/travels/japan/spiritual-japan.html" → "Spiritual Japan"
+function pathToTitle(url) {
+  try {
+    const path = new URL(url).pathname;
+    const file = path.split('/').pop().replace('.html', '');
+    return file
+      .replace(/[-_]/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase())
+      .trim() || path;
+  } catch {
+    return url;
+  }
+}
+
+// Extract section from path, e.g. "/travels/japan/..." → "travels › japan"
+function pathToBreadcrumb(url) {
+  try {
+    const parts = new URL(url).pathname.split('/').filter(Boolean);
+    parts.pop(); // remove filename
+    return parts.join(' › ') || 'home';
+  } catch {
+    return '';
+  }
+}
+
+// Fetch and parse the sitemap once
+async function loadSitemap() {
+  if (sitemapLoaded) return;
+  searchResults.classList.add('visible');
+  searchResults.innerHTML = '<span class="search-status">Loading pages…</span>';
+  try {
+    const res  = await fetch('https://yasirbilgin.com/sitemap.xml');
+    const text = await res.text();
+    const parser = new DOMParser();
+    const xml    = parser.parseFromString(text, 'application/xml');
+    const locs   = Array.from(xml.querySelectorAll('url > loc'));
+    sitemapPages = locs.map(el => {
+      const url = el.textContent.trim();
+      return { url, title: pathToTitle(url), breadcrumb: pathToBreadcrumb(url) };
+    });
+    sitemapLoaded = true;
+  } catch (e) {
+    searchResults.innerHTML = '<span class="search-status">Could not load pages — check your connection.</span>';
+    return;
+  }
+  // Re-run search now that pages are loaded
+  runSearch(searchInput.value.trim());
+}
+
+// Highlight matching substring in text
+function highlight(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark>$1</mark>');
+}
+
+function runSearch(q) {
+  if (!q) {
+    searchResults.classList.remove('visible');
+    searchResults.innerHTML = '';
+    return;
+  }
+
+  if (!sitemapLoaded) {
+    loadSitemap();
+    return;
+  }
+
+  const lower   = q.toLowerCase();
+  const matches = sitemapPages.filter(p =>
+    p.title.toLowerCase().includes(lower) ||
+    p.breadcrumb.toLowerCase().includes(lower) ||
+    p.url.toLowerCase().includes(lower)
+  ).slice(0, 12);
+
+  searchResults.classList.add('visible');
+  activeIndex = -1;
+
+  if (!matches.length) {
+    searchResults.innerHTML = '<span class="search-status">No pages found.</span>';
+    return;
+  }
+
+  searchResults.innerHTML = matches.map(p => `
+    <a class="search-result-item" href="${p.url}">
+      <span class="result-title">${highlight(p.title, q)}</span>
+      <span class="result-path">${highlight(p.breadcrumb, q)}</span>
+    </a>
+  `).join('');
+}
+
+function updateActiveResult(index) {
+  const items = Array.from(searchResults.querySelectorAll('.search-result-item'));
+  if (!items.length) return;
+  activeIndex = (index + items.length) % items.length;
+  items.forEach((el, i) => {
+    el.style.background = i === activeIndex ? 'var(--accent-light)' : '';
+  });
+}
+
+// Trigger search as user types (debounced)
+let debounceTimer;
+searchInput.addEventListener('input', function() {
+  clearTimeout(debounceTimer);
+  const q = this.value.trim();
+  if (!q) { searchResults.classList.remove('visible'); searchResults.innerHTML = ''; return; }
+  debounceTimer = setTimeout(() => runSearch(q), 180);
+});
+
+// Also trigger on button click or Enter
+searchBtn.addEventListener('click', () => runSearch(searchInput.value.trim()));
+searchInput.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowDown') { e.preventDefault(); updateActiveResult(activeIndex + 1); }
+  if (e.key === 'ArrowUp') { e.preventDefault(); updateActiveResult(activeIndex - 1); }
+  if (e.key === 'Enter' && activeIndex >= 0) {
+    const items = searchResults.querySelectorAll('.search-result-item');
+    if (items[activeIndex]) window.location.href = items[activeIndex].href;
+    return;
+  }
+  if (e.key === 'Enter') runSearch(this.value.trim());
+  if (e.key === 'Escape') { searchResults.classList.remove('visible'); searchResults.innerHTML = ''; }
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.search-box-container')) {
+    searchResults.classList.remove('visible');
+  }
+});
+
+// Pre-load sitemap in background after page settles
+setTimeout(loadSitemap, 1000);
+</script>
+
 </body>
 </html>
